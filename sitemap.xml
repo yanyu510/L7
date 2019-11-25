@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url> <loc>https://l7.antv.vision/zh/docs/manual/tutorial/map/amap</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://l7.antv.vision/en/docs/tutorial/data</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://l7.antv.vision/zh/docs/tutorial/data</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://l7.antv.vision/en/docs/tutorial/quickstart</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://l7.antv.vision/zh/docs/tutorial/quickstart</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://l7.antv.vision/en/docs/api/l7</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://l7.antv.vision/zh/docs/tutorial/quickstart</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://l7.antv.vision/zh/docs/api/l7</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://l7.antv.vision/en/docs/api/scene</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://l7.antv.vision/zh/docs/api/scene</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://l7.antv.vision/en/docs/manual/tutorial/data</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://l7.antv.vision/zh/docs/manual/tutorial/data</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://l7.antv.vision/en/docs/manual/tutorial/quickstart</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://l7.antv.vision/zh/docs/manual/tutorial/quickstart</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://l7.antv.vision/en/docs/tutorial/map/amap</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://l7.antv.vision/zh/docs/tutorial/map/amap</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://l7.antv.vision/en/docs/tutorial/map/mapbox</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://l7.antv.vision/zh/docs/tutorial/map/mapbox</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://l7.antv.vision/en/docs/api/source/geojson</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://l7.antv.vision/zh/docs/api/source/geojson</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://l7.antv.vision/en/docs/api/source/source</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
