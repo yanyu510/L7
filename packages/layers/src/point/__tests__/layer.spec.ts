@@ -1,6 +1,6 @@
-import { Scene } from '../../../../scene/src';
-import { Mapbox } from '../../../../maps/src';
 import PointLayer from '../';
+import { Mapbox } from '../../../../maps/src';
+import { Scene } from '../../../../scene/src';
 describe('pointLayer', () => {
   const el = document.createElement('div');
   el.id = 'test-div-id';
