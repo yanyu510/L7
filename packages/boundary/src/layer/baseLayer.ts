@@ -206,6 +206,7 @@ export default class BaseLayer extends EventEmitter {
       });
     }
     this.fillLayer = fillLayer;
+    this.fillLayer.on('dataUpdated', () => this.emit('dataUpdated'));
     this.layers.push(fillLayer);
     this.scene.addLayer(fillLayer);
     if (this.options.bubble && this.options.bubble?.enable !== false) {

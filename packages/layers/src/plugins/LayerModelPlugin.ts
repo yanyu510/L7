@@ -22,6 +22,10 @@ export default class LayerModelPlugin implements ILayerPlugin {
       // 初始化 Model
       layer.buildModels();
       layer.layerModelNeedUpdate = false;
+      layer.emit('dataUpdated', {
+        target: layer,
+        type: 'dataUpdated',
+      });
       return false;
     });
   }
