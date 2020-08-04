@@ -58,3 +58,18 @@ export * from './services/renderer/IRenderbuffer';
 export * from './services/renderer/ITexture2D';
 export * from './services/renderer/IUniform';
 export * from './services/renderer/gl';
+
+/** 图层插件 */
+export * from './services/layer/plugins/DataMappingPlugin';
+export * from './services/layer/plugins/DataSourcePlugin';
+export * from './services/layer/plugins/FeatureScalePlugin';
+export * from './services/layer/plugins/LayerAnimateStylePlugin';
+export * from './services/layer/plugins/LayerModelPlugin';
+export * from './services/layer/plugins/LayerStylePlugin';
+export * from './services/layer/plugins/LightingPlugin';
+export * from './services/layer/plugins/MultiPassRendererPlugin';
+export * from './services/layer/plugins/PixelPickingPlugin';
+export * from './services/layer/plugins/RegisterStyleAttributePlugin';
+export * from './services/layer/plugins/ShaderUniformPlugin';
+export * from './services/layer/plugins/UpdateModelPlugin';
+export * from './services/layer/plugins/UpdateStyleAttributePlugin';

@@ -1,18 +1,17 @@
 import {
-  AttributeType,
-  gl,
-  IEncodeFeature,
-  ILayer,
-  ILayerPlugin,
-  IRendererService,
-  IStyleAttributeService,
-} from '@antv/l7-core';
-import {
   decodePickingColor,
   encodePickingColor,
   rgb2arr,
 } from '@antv/l7-utils';
 import { injectable } from 'inversify';
+import { gl } from '../../renderer/gl';
+import { IRendererService } from '../../renderer/IRendererService';
+import { ILayer, ILayerPlugin } from '../ILayerService';
+import {
+  AttributeType,
+  IEncodeFeature,
+  IStyleAttributeService,
+} from '../IStyleAttributeService';
 
 const PickingStage = {
   NONE: 0.0,
@@ -21,7 +20,7 @@ const PickingStage = {
 };
 
 @injectable()
-export default class PixelPickingPlugin implements ILayerPlugin {
+export class PixelPickingPlugin implements ILayerPlugin {
   public apply(
     layer: ILayer,
     {

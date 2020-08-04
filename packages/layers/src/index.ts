@@ -1,4 +1,22 @@
-import { container, ILayerPlugin, TYPES } from '@antv/l7-core';
+import {
+  container,
+  DataMappingPlugin,
+  DataSourcePlugin,
+  FeatureScalePlugin,
+  ILayerPlugin,
+  LayerAnimateStylePlugin,
+  LayerModelPlugin,
+  LayerStylePlugin,
+  LightingPlugin,
+  MultiPassRendererPlugin,
+  PixelPickingPlugin,
+  RegisterStyleAttributePlugin,
+  ShaderUniformPlugin,
+  TYPES,
+  UpdateModelPlugin,
+  UpdateStyleAttributePlugin,
+} from '@antv/l7-core';
+
 import CityBuildingLayer from './citybuliding/building';
 import BaseLayer from './core/BaseLayer';
 import './glsl.d';
@@ -10,19 +28,7 @@ import PolygonLayer from './polygon';
 import RasterLayer from './raster';
 
 // import ConfigSchemaValidationPlugin from './plugins/ConfigSchemaValidationPlugin';
-import DataMappingPlugin from './plugins/DataMappingPlugin';
-import DataSourcePlugin from './plugins/DataSourcePlugin';
-import FeatureScalePlugin from './plugins/FeatureScalePlugin';
-import LayerAnimateStylePlugin from './plugins/LayerAnimateStylePlugin';
-import LayerModelPlugin from './plugins/LayerModelPlugin';
-import LayerStylePlugin from './plugins/LayerStylePlugin';
-import LightingPlugin from './plugins/LightingPlugin';
-import MultiPassRendererPlugin from './plugins/MultiPassRendererPlugin';
-import PixelPickingPlugin from './plugins/PixelPickingPlugin';
-import RegisterStyleAttributePlugin from './plugins/RegisterStyleAttributePlugin';
-import ShaderUniformPlugin from './plugins/ShaderUniformPlugin';
-import UpdateModelPlugin from './plugins/UpdateModelPlugin';
-import UpdateStyleAttributePlugin from './plugins/UpdateStyleAttributePlugin';
+
 /**
  * 校验传入参数配置项的正确性
  * @see /dev-docs/ConfigSchemaValidation.md

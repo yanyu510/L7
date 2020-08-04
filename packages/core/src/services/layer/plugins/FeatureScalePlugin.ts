@@ -1,8 +1,14 @@
+import { extent, ticks } from 'd3-array';
+import * as d3 from 'd3-scale';
+import { inject, injectable } from 'inversify';
+import { isNil, isString, uniq } from 'lodash';
+import { TYPES } from '../../../types';
+import { IGlobalConfigService } from '../../config/IConfigService';
+import { ILogService } from '../../log/ILogService';
+import { IParseDataItem } from '../../source/ISourceService';
+import { ILayer, ILayerPlugin } from '../ILayerService';
 import {
-  IGlobalConfigService,
-  ILayer,
-  ILayerPlugin,
-  ILogService,
+  IEncodeFeature,
   IScale,
   IScaleOptions,
   IStyleAttribute,
@@ -11,13 +17,7 @@ import {
   ScaleTypeName,
   ScaleTypes,
   StyleScaleType,
-  TYPES,
-} from '@antv/l7-core';
-import { IParseDataItem } from '@antv/l7-source';
-import { extent, ticks } from 'd3-array';
-import * as d3 from 'd3-scale';
-import { inject, injectable } from 'inversify';
-import { isNil, isString, uniq } from 'lodash';
+} from '../IStyleAttributeService';
 
 const dateRegex = /^(?:(?!0000)[0-9]{4}([-/.]+)(?:(?:0?[1-9]|1[0-2])\1(?:0?[1-9]|1[0-9]|2[0-8])|(?:0?[13-9]|1[0-2])\1(?:29|30)|(?:0?[13578]|1[02])\1(?:31))|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)([-/.]?)0?2\2(?:29))(\s+([01]|([01][0-9]|2[0-3])):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9]))?$/;
 
@@ -37,7 +37,7 @@ const scaleMap = {
  * 根据 Source 原始数据为指定字段创建 Scale，保存在 StyleAttribute 上，供下游插件使用
  */
 @injectable()
-export default class FeatureScalePlugin implements ILayerPlugin {
+export class FeatureScalePlugin implements ILayerPlugin {
   @inject(TYPES.IGlobalConfigService)
   private readonly configService: IGlobalConfigService;
 

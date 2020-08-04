@@ -1,10 +1,10 @@
-import { ILayer, ILayerPlugin, IMapService, TYPES } from '@antv/l7-core';
 import { injectable } from 'inversify';
+import { ILayer, ILayerPlugin } from '../ILayerService';
 /**
  * Layer Model 初始化，更新，销毁
  */
 @injectable()
-export default class LayerModelPlugin implements ILayerPlugin {
+export class LayerModelPlugin implements ILayerPlugin {
   public apply(layer: ILayer) {
     layer.hooks.init.tap('LayerModelPlugin', () => {
       // 更新Model 配置项

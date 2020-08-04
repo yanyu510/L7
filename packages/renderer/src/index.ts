@@ -1,6 +1,7 @@
 /**
  *
  */
+import GCanvasRendererService from './g-canvas';
 import ReglRendererService from './regl';
 
-export { ReglRendererService };
+export { ReglRendererService, GCanvasRendererService };

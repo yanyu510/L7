@@ -35,6 +35,7 @@ import {
   IStyleAttributeService,
   IStyleAttributeUpdateOptions,
   lazyInject,
+  normalizePasses,
   ScaleAttributeType,
   ScaleTypeName,
   ScaleTypes,
@@ -49,7 +50,6 @@ import { Container } from 'inversify';
 import { isFunction, isObject } from 'lodash';
 // @ts-ignore
 import mergeJsonSchemas from 'merge-json-schemas';
-import { normalizePasses } from '../plugins/MultiPassRendererPlugin';
 import { BlendTypes } from '../utils/blend';
 import baseLayerSchema from './schema';
 /**
@@ -751,6 +751,9 @@ export default class BaseLayer<ChildLayerStyleOptions = {}> extends EventEmitter
     }
     // source 可能会复用，会在其它layer被修改
     this.layerSource.on('update', this.sourceEvent);
+  }
+  public initSource(data: any, opt: ISourceCFG | undefined) {
+    this.setSource(new Source(data, opt));
   }
   public getSource() {
     return this.layerSource;

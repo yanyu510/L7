@@ -1,14 +1,12 @@
-import {
-  CameraUniform,
-  CoordinateUniform,
-  ICameraService,
-  ICoordinateSystemService,
-  ILayer,
-  ILayerPlugin,
-  IRendererService,
-  TYPES,
-} from '@antv/l7-core';
 import { inject, injectable } from 'inversify';
+import { TYPES } from '../../../types';
+import { CameraUniform, ICameraService } from '../../camera/ICameraService';
+import {
+  CoordinateUniform,
+  ICoordinateSystemService,
+} from '../../coordinate/ICoordinateSystemService';
+import { IRendererService } from '../../renderer/IRendererService';
+import { ILayer, ILayerPlugin } from '../ILayerService';
 
 /**
  * 在渲染之前需要获取当前 Shader 所需 Uniform，例如：
@@ -18,7 +16,7 @@ import { inject, injectable } from 'inversify';
  * 3. 当前 Layer 本身的样式属性
  */
 @injectable()
-export default class ShaderUniformPlugin implements ILayerPlugin {
+export class ShaderUniformPlugin implements ILayerPlugin {
   @inject(TYPES.ICameraService)
   private readonly cameraService: ICameraService;
 

@@ -1,20 +1,18 @@
+import { inject, injectable } from 'inversify';
+import { TYPES } from '../../../types';
+import { ILogService } from '../../log/ILogService';
+import { gl } from '../../renderer/gl';
+import { ILayer, ILayerPlugin } from '../ILayerService';
 import {
   AttributeType,
-  gl,
   IEncodeFeature,
-  ILayer,
-  ILayerPlugin,
-  ILogService,
   IStyleAttributeService,
-  TYPES,
-} from '@antv/l7-core';
-import { inject, injectable } from 'inversify';
-
+} from '../IStyleAttributeService';
 /**
  * 在初始化阶段完成属性的注册，以及首次根据 Layer 指定的三角化方法完成 indices 和 attribute 的创建
  */
 @injectable()
-export default class RegisterStyleAttributePlugin implements ILayerPlugin {
+export class RegisterStyleAttributePlugin implements ILayerPlugin {
   @inject(TYPES.ILogService)
   private readonly logger: ILogService;
 

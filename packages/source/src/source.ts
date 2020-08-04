@@ -2,23 +2,14 @@
 import { SyncHook } from '@antv/async-hook';
 import {
   IClusterOptions,
-  IMapService,
   IParseDataItem,
   IParserCfg,
   IParserData,
   ISourceCFG,
   ITransform,
-  lazyInject,
-  TYPES,
 } from '@antv/l7-core';
 import { extent } from '@antv/l7-utils';
-import {
-  BBox,
-  Feature,
-  FeatureCollection,
-  Geometries,
-  Properties,
-} from '@turf/helpers';
+import { BBox } from '@turf/helpers';
 import { EventEmitter } from 'eventemitter3';
 import { cloneDeep, isFunction, isString } from 'lodash';
 // @ts-ignore

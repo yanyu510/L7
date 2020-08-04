@@ -171,6 +171,7 @@ export interface ILayer {
   addPlugin(plugin: ILayerPlugin): ILayer;
   getSource(): ISource;
   setSource(source: ISource): void;
+  initSource(data: any, opt: ISourceCFG | undefined): void;
   setEncodedData(encodedData: IEncodeFeature[]): void;
   getEncodedData(): IEncodeFeature[];
   getScaleOptions(): IScaleOptions;

@@ -1,19 +1,18 @@
-import {
-  IEncodeFeature,
-  IGlobalConfigService,
-  ILayer,
-  ILayerPlugin,
-  ILogService,
-  IParseDataItem,
-  IStyleAttribute,
-  IStyleAttributeService,
-  TYPES,
-} from '@antv/l7-core';
 import { rgb2arr } from '@antv/l7-utils';
 import { inject, injectable } from 'inversify';
+import { TYPES } from '../../../types';
+import { IGlobalConfigService } from '../../config/IConfigService';
+import { ILogService } from '../../log/ILogService';
+import { IParseDataItem } from '../../source/ISourceService';
+import { ILayer, ILayerPlugin } from '../ILayerService';
+import {
+  IEncodeFeature,
+  IStyleAttribute,
+  IStyleAttributeService,
+} from '../IStyleAttributeService';
 
 @injectable()
-export default class DataMappingPlugin implements ILayerPlugin {
+export class DataMappingPlugin implements ILayerPlugin {
   @inject(TYPES.IGlobalConfigService)
   private readonly configService: IGlobalConfigService;
 

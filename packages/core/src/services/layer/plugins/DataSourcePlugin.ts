@@ -1,15 +1,16 @@
-import { ILayer, ILayerPlugin, IMapService, TYPES } from '@antv/l7-core';
-import Source from '@antv/l7-source';
 import { injectable } from 'inversify';
+import { TYPES } from '../../../types';
+import { IMapService } from '../../map/IMapService'
+import { ILayer, ILayerPlugin } from '../ILayerService';
 
 @injectable()
-export default class DataSourcePlugin implements ILayerPlugin {
+export class DataSourcePlugin implements ILayerPlugin {
   protected mapService: IMapService;
   public apply(layer: ILayer) {
     this.mapService = layer.getContainer().get<IMapService>(TYPES.IMapService);
     layer.hooks.init.tap('DataSourcePlugin', () => {
       const { data, options } = layer.sourceOption;
-      layer.setSource(new Source(data, options));
+      layer.initSource(data, options);
       this.updateClusterData(layer);
     });
 

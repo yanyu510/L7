@@ -29,7 +29,8 @@ import {
   SceneEventList,
   TYPES,
 } from '@antv/l7-core';
-import { ReglRendererService } from '@antv/l7-renderer';
+import { GCanvasRendererService, ReglRendererService } from '@antv/l7-renderer';
+
 import { DOM } from '@antv/l7-utils';
 import { Container } from 'inversify';
 import ILayerManager from './ILayerManager';

@@ -1,14 +1,5 @@
-import {
-  CameraUniform,
-  CoordinateUniform,
-  ICameraService,
-  ICoordinateSystemService,
-  ILayer,
-  ILayerPlugin,
-  IRendererService,
-  TYPES,
-} from '@antv/l7-core';
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
+import { ILayer, ILayerPlugin } from '../ILayerService';
 
 const lightTypeUniformMap = {
   directional: {
@@ -120,7 +111,7 @@ export function generateLightingUniforms(
  * 光照 & Shadow
  */
 @injectable()
-export default class LightingPlugin implements ILayerPlugin {
+export class LightingPlugin implements ILayerPlugin {
   public apply(layer: ILayer) {
     layer.hooks.beforeRender.tap('LightingPlugin', () => {
       const { enableLighting } = layer.getLayerConfig();
