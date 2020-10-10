@@ -61,7 +61,6 @@ export default class AnimatePoint extends React.Component {
           left: 0,
           right: 0,
           bottom: 0,
-          transform: 'scale(1.5)',
         }}
       />
     );

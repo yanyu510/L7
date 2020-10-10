@@ -1,4 +1,4 @@
-import { earthRadius, LngLat, LngLatLike } from '@antv/l7-utils';
+import LngLat, { earthRadius, LngLatLike } from '../geo/lng_lat';
 
 /*
  * The average circumference of the world in meters.
@@ -13,33 +13,27 @@ function circumferenceAtLatitude(latitude: number) {
 }
 
 export function mercatorXfromLng(lng: number) {
-  return (180 + lng) / 360;
+  return lng;
 }
 
 export function mercatorYfromLat(lat: number) {
-  return (
-    (180 -
-      (180 / Math.PI) *
-        Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360))) /
-    360
-  );
+  return lat;
 }
 
 export function mercatorZfromAltitude(altitude: number, lat: number) {
-  return altitude / circumferenceAtLatitude(lat);
+  return altitude;
 }
 
 export function lngFromMercatorX(x: number) {
-  return x * 360 - 180;
+  return x;
 }
 
 export function latFromMercatorY(y: number) {
-  const y2 = 180 - y * 360;
-  return (360 / Math.PI) * Math.atan(Math.exp((y2 * Math.PI) / 180)) - 90;
+  return y;
 }
 
 export function altitudeFromMercatorZ(z: number, y: number) {
-  return z * circumferenceAtLatitude(latFromMercatorY(y));
+  return z;
 }
 
 /**
@@ -53,14 +47,14 @@ export function altitudeFromMercatorZ(z: number, y: number) {
  * @private
  */
 export function mercatorScale(lat: number) {
-  return 1 / Math.cos((lat * Math.PI) / 180);
+  return 1;
 }
 
-export default class MercatorCoordinate {
+export default class SimpleCoordinate {
   public static fromLngLat(lngLatLike: LngLatLike, altitude: number = 0) {
     const lngLat = LngLat.convert(lngLatLike);
 
-    return new MercatorCoordinate(
+    return new SimpleCoordinate(
       mercatorXfromLng(lngLat.lng),
       mercatorYfromLat(lngLat.lat),
       mercatorZfromAltitude(altitude, lngLat.lat),
@@ -75,17 +69,16 @@ export default class MercatorCoordinate {
     this.y = +y;
     this.z = +z;
   }
-
   public toLngLat() {
-    return new LngLat(lngFromMercatorX(this.x), latFromMercatorY(this.y));
+    return new LngLat(this.x, this.y);
   }
 
   public toAltitude() {
-    return altitudeFromMercatorZ(this.z, this.y);
+    return this.z;
   }
 
   public meterInMercatorCoordinateUnits() {
     // 1 meter / circumference at equator in meters * Mercator projection scale factor at this latitude
-    return (1 / earthCircumfrence) * mercatorScale(latFromMercatorY(this.y));
+    return 1;
   }
 }

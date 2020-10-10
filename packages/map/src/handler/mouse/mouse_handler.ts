@@ -1,6 +1,5 @@
 // @ts-ignore
-import Point from '../../geo/point';
-import DOM from '../../utils/dom';
+import { DOM, Point } from '@antv/l7-utils';
 import { buttonStillPressed } from './util';
 export default class MouseHandler {
   protected enabled: boolean;
@@ -33,6 +32,7 @@ export default class MouseHandler {
     }
 
     this.lastPoint = point;
+    // @ts-ignore
     this.eventButton = eventButton;
   }
 

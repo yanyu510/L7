@@ -1,4 +1,5 @@
 import { Logo } from '@antv/l7-component';
+
 import {
   Bounds,
   createLayerContainer,
@@ -25,12 +26,11 @@ import {
   ISceneConfig,
   ISceneService,
   IStatusOptions,
-  Point,
   SceneEventList,
   TYPES,
 } from '@antv/l7-core';
 import { ReglRendererService } from '@antv/l7-renderer';
-import { DOM } from '@antv/l7-utils';
+import { DOM, PointLike as Point } from '@antv/l7-utils';
 import { Container } from 'inversify';
 import ILayerManager from './ILayerManager';
 import IMapController from './IMapController';

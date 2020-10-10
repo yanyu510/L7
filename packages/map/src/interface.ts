@@ -1,4 +1,4 @@
-import { LngLatBoundsLike } from './geo/lng_lat_bounds';
+import { LngLatBoundsLike } from '@antv/l7-utils';
 
 export interface IMapOptions {
   hash: boolean;

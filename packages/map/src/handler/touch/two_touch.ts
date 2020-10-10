@@ -1,7 +1,5 @@
 // @ts-ignore
-import Point from '../../geo/point';
-import DOM from '../../utils/dom';
-
+import { DOM, Point } from '@antv/l7-utils';
 export default class TwoTouchHandler {
   protected enabled: boolean;
   protected active: boolean;

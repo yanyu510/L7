@@ -1,5 +1,7 @@
 // @ts-ignore
-import { clamp, interpolate, Point } from '@antv/l7-utils';
+import { clamp, interpolate } from '../util';
+import Point from './point';
+
 /**
  * An `EdgeInset` object represents screen space padding applied to the edges of the viewport.
  * This shifts the apprent center or the vanishing point of the map. This is useful for adding floating UI elements

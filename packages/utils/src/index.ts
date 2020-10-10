@@ -9,3 +9,7 @@ export * from './color';
 export * from './anchor';
 import * as Satistics from './statistics';
 export { DOM, Satistics };
+export * from './geo/lng_lat';
+export * from './geo/point';
+export * from './geo/lng_lat_bounds';
+export * from './common';

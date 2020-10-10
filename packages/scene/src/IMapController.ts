@@ -1,4 +1,5 @@
-import { Bounds, ILngLat, IPoint, IStatusOptions, Point } from '@antv/l7-core';
+import { Bounds, ILngLat, IPoint, IStatusOptions } from '@antv/l7-core';
+import { PointLike } from '@antv/l7-utils';
 
 export default interface IMapController {
   /**
@@ -39,12 +40,12 @@ export default interface IMapController {
   /**
    * 地图平移到指定点 `[x, y]`
    */
-  panTo(p: Point): void;
+  panTo(p: PointLike): void;
 
   /**
    * 地图平移到指定点 `[x, y]`
    */
-  panBy(pixel: Point): void;
+  panBy(pixel: PointLike): void;
 
   /**
    * 调整地图适合指定区域
@@ -63,7 +64,7 @@ export default interface IMapController {
 
   // control with raw map
   setRotation(rotation: number): void;
-  setZoomAndCenter(zoom: number, center: Point): void;
+  setZoomAndCenter(zoom: number, center: PointLike): void;
   setCenter(center: [number, number]): void;
   setPitch(pitch: number): void;
   setZoom(zoom: number): void;
@@ -71,9 +72,9 @@ export default interface IMapController {
   setMapStatus(option: Partial<IStatusOptions>): void;
 
   // coordinates methods
-  pixelToLngLat(pixel: Point): ILngLat;
-  lngLatToPixel(lnglat: Point): IPoint;
-  containerToLngLat(pixel: Point): ILngLat;
-  lngLatToContainer(lnglat: Point): IPoint;
+  pixelToLngLat(pixel: PointLike): ILngLat;
+  lngLatToPixel(lnglat: PointLike): IPoint;
+  containerToLngLat(pixel: PointLike): ILngLat;
+  lngLatToContainer(lnglat: PointLike): IPoint;
   exportMap(type: 'jpg' | 'png'): string;
 }
