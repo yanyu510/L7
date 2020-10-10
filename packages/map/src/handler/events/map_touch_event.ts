@@ -1,8 +1,6 @@
 // @ts-ignore
-import LngLat from '../../geo/lng_lat';
-import Point from '../../geo/point';
+import { DOM, LngLat, Point } from '@antv/l7-utils';
 import { Map } from '../../map';
-import DOM from '../../utils/dom';
 import { Event } from './event';
 export default class MapTouchEvent extends Event {
   /**

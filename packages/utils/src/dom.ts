@@ -1,5 +1,22 @@
-const docStyle = window.document.documentElement.style;
+import { Point } from './geo/point';
+
+const docStyle: { [key: string]: any } =
+  window.document && window.document.documentElement.style;
+
 type ELType = HTMLElement | SVGElement;
+// @ts-ignore
+const suppress = (e: MouseEvent) => {
+  e.preventDefault();
+  e.stopPropagation();
+  window.removeEventListener('click', suppress, true);
+};
+
+export function suppressClick() {
+  window.addEventListener('click', suppress, true);
+  window.setTimeout(() => {
+    window.removeEventListener('click', suppress, true);
+  }, 0);
+}
 export function getContainer(domId: string | HTMLDivElement) {
   let $dom = domId as HTMLDivElement;
   if (typeof domId === 'string') {
@@ -41,6 +58,11 @@ export function create(
   if (container) {
     container.appendChild(el);
   }
+  return el;
+}
+
+export function createNS(namespaceURI: string, tagName: string) {
+  const el = window.document.createElementNS(namespaceURI, tagName);
   return el;
 }
 // @function remove(el: HTMLElement)
@@ -151,4 +173,106 @@ export function printCanvas(canvas: HTMLCanvasElement) {
   ];
   // tslint:disable-next-line:no-console
   console.log('%c\n', css.join(''));
+}
+
+const selectProp = testProp([
+  'userSelect',
+  'MozUserSelect',
+  'WebkitUserSelect',
+  'msUserSelect',
+]);
+let userSelect: any;
+
+export function disableDrag() {
+  if (docStyle && selectProp) {
+    userSelect = docStyle[selectProp];
+    docStyle[selectProp] = 'none';
+  }
+}
+
+export function enableDrag() {
+  if (docStyle && selectProp) {
+    docStyle[selectProp] = userSelect;
+  }
+}
+
+let passiveSupported = false;
+
+try {
+  // https://github.com/facebook/flow/issues/285
+  // $FlowFixMe
+  const options = Object.defineProperty({}, 'passive', {
+    get() {
+      // eslint-disable-line
+      passiveSupported = true;
+    },
+  });
+  window.addEventListener('test', options, options);
+  window.removeEventListener('test', options, options);
+} catch (err) {
+  passiveSupported = false;
+}
+
+export function addEventListener(
+  target: any,
+  type: any,
+  callback: any,
+  options: { passive?: boolean; capture?: boolean } = {},
+) {
+  if ('passive' in options && passiveSupported) {
+    target.addEventListener(type, callback, options);
+  } else {
+    target.addEventListener(type, callback, options.capture);
+  }
+}
+
+export function removeEventListener(
+  target: any,
+  type: any,
+  callback: any,
+  options: { passive?: boolean; capture?: boolean } = {},
+) {
+  if ('passive' in options && passiveSupported) {
+    target.removeEventListener(type, callback, options);
+  } else {
+    target.removeEventListener(type, callback, options.capture);
+  }
+}
+
+export function mousePos(el: HTMLElement, e: MouseEvent | Touch) {
+  const rect = el.getBoundingClientRect();
+  return new Point(
+    e.clientX - rect.left - el.clientLeft,
+    e.clientY - rect.top - el.clientTop,
+  );
+}
+
+export function mouseButton(e: MouseEvent) {
+  if (
+    // @ts-ignore
+    typeof window.InstallTrigger !== 'undefined' &&
+    e.button === 2 &&
+    e.ctrlKey &&
+    window.navigator.platform.toUpperCase().indexOf('MAC') >= 0
+  ) {
+    // Fix for https://github.com/mapbox/mapbox-gl-js/issues/3131:
+    // Firefox (detected by InstallTrigger) on Mac determines e.button = 2 when
+    // using Control + left click
+    return 0;
+  }
+  return e.button;
+}
+
+export function touchPos(el: HTMLElement, touches: Touch[] | TouchList) {
+  const rect = el.getBoundingClientRect();
+  const points = [];
+  for (const touche of touches) {
+    points.push(
+      new Point(
+        touche.clientX - rect.left - el.clientLeft,
+        touche.clientY - rect.top - el.clientTop,
+      ),
+    );
+  }
+  return points;
 }

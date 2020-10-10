@@ -1,11 +1,16 @@
-import { DOM } from '@antv/l7-utils';
+import {
+  DOM,
+  LngLat,
+  LngLatBounds,
+  LngLatBoundsLike,
+  LngLatLike,
+  Point,
+  PointLike,
+  renderframe,
+} from '@antv/l7-utils';
 import { merge } from 'lodash';
 import Camera from './camera';
 import './css/l7.css';
-import LngLat, { LngLatLike } from './geo/lng_lat';
-import LngLatBounds, { LngLatBoundsLike } from './geo/lng_lat_bounds';
-// @ts-ignore
-import Point, { PointLike } from './geo/point';
 import BoxZoomHandler from './handler/box_zoom';
 import HandlerManager from './handler/handler_manager';
 import KeyboardHandler from './handler/keyboard';
@@ -18,7 +23,6 @@ import TouchZoomRotateHandler from './handler/shim/touch_zoom_rotate';
 import { TouchPitchHandler } from './handler/touch';
 import Hash from './hash';
 import { IMapOptions } from './interface';
-import { renderframe } from './util';
 import { PerformanceUtils } from './utils/performance';
 import TaskQueue, { TaskID } from './utils/task_queue';
 type CallBack = (_: number) => void;

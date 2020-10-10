@@ -1,4 +1,4 @@
-import { earthRadius, LngLat, LngLatLike } from '@antv/l7-utils';
+import LngLat, { earthRadius, LngLatLike } from '../geo/lng_lat';
 
 /*
  * The average circumference of the world in meters.

@@ -1,9 +1,14 @@
 // @ts-ignore
-import LngLat from '../geo/lng_lat';
-import Point from '../geo/point';
+import {
+  bezier,
+  DOM,
+  ease,
+  interpolate,
+  LngLat,
+  now,
+  Point,
+} from '@antv/l7-react';
 import { Map } from '../map';
-import { bezier, ease, interpolate, now } from '../util';
-import DOM from '../utils/dom';
 import HandlerManager from './handler_manager';
 
 // deltaY value for mouse scroll wheel identification

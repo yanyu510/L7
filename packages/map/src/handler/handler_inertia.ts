@@ -1,10 +1,9 @@
 // @ts-ignore
-import Point from '../geo/point';
+import { bezier, clamp, now, Point } from '@antv/l7-utils';
 
 // tslint:disable-next-line:no-submodule-imports
 import merge from 'lodash/merge';
 import { Map } from '../map';
-import { bezier, clamp, now } from '../util';
 import { IDragPanOptions } from './shim/drag_pan';
 
 const defaultInertiaOptions = {

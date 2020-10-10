@@ -24,6 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/runtime": "^7.7.7",
+    "@mapbox/unitbezier": "^0.0.0",
     "@turf/helpers": "^6.1.4",
     "d3-color": "^1.4.0"
   },

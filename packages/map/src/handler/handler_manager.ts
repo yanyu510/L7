@@ -1,9 +1,7 @@
-// @ts-ignore
+import { DOM, Point } from '@antv/l7-utils';
 // tslint:disable-next-line: no-submodule-imports
 import merge from 'lodash/merge';
-import Point from '../geo/point';
 import { Map } from '../map';
-import DOM from '../utils/dom';
 import BlockableMapEventHandler from './blockable_map_event';
 import BoxZoomHandler from './box_zoom';
 import ClickZoomHandler from './click_zoom';
@@ -145,7 +143,7 @@ class HandlerManager {
         type,
         // @ts-ignore
         target === window.document ? this.handleWindowEvent : this.handleEvent,
-        listenerOptions,
+        listenerOptions || {},
       );
     }
   }
@@ -157,7 +155,7 @@ class HandlerManager {
         type,
         // @ts-ignore
         target === window.document ? this.handleWindowEvent : this.handleEvent,
-        listenerOptions,
+        listenerOptions || {},
       );
     }
   }

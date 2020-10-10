@@ -1,6 +1,6 @@
 // @ts-ignore
+import { DOM } from '@antv/l7-utils';
 import Point from '../../geo/point';
-import DOM from '../../utils/dom';
 import MouseHandler from './mouse_handler';
 import { buttonStillPressed, LEFT_BUTTON } from './util';
 export default class MousePanHandler extends MouseHandler {

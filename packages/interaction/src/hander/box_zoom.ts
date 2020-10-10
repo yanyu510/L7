@@ -1,7 +1,7 @@
 // @ts-ignore
-import { DOM } from '@antv/l7-utils';
 import Point from '../geo/point';
 import { Map } from '../map';
+import DOM from '../utils/dom';
 import { Event } from './events/event';
 
 /**
