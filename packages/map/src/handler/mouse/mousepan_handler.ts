@@ -1,4 +1,3 @@
-// @ts-ignore
 import { DOM, Point } from '@antv/l7-utils';
 import MouseHandler from './mouse_handler';
 import { buttonStillPressed, LEFT_BUTTON } from './util';
