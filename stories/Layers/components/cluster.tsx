@@ -38,7 +38,7 @@ export default class Point3D extends React.Component {
               cluster: true,
             })
             .shape('circle')
-            .size(8)
+            .size('point_count', [5, 25])
             .active({
               color: 'red',
             })
