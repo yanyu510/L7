@@ -1,4 +1,4 @@
-import { wrap } from '../util';
+import { wrap } from '@antv/l7-utils';
 import LngLatBounds from './lng_lat_bounds';
 export const earthRadius = 6371008.8;
 export type LngLatLike =

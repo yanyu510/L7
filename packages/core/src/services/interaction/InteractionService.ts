@@ -1,3 +1,4 @@
+import { DOM, Point } from '@antv/l7-utils';
 import EventEmitter from 'eventemitter3';
 import Hammer from 'hammerjs';
 import { inject, injectable } from 'inversify';
@@ -5,7 +6,11 @@ import { inject, injectable } from 'inversify';
 import { TYPES } from '../../types';
 import { ILogService } from '../log/ILogService';
 import { ILngLat, IMapService } from '../map/IMapService';
-import { IInteractionService, InteractionEvent } from './IInteractionService';
+import {
+  IHandler,
+  IInteractionService,
+  InteractionEvent,
+} from './IInteractionService';
 const DragEventMap: { [key: string]: string } = {
   panstart: 'dragstart',
   panmove: 'dragging',
@@ -35,10 +40,23 @@ export default class InteractionService extends EventEmitter
 
   private $containter: HTMLElement;
 
+  private $listeners: Array<
+    [HTMLElement, string, void | { passive?: boolean; capture?: boolean }]
+  >;
+
+  private handlersById: { [key: string]: IHandler };
+
+  private handlers: Array<{
+    handlerName: string;
+    handler: IHandler;
+    allowed: any;
+  }>;
+
   public init() {
     // 注册事件在地图底图上
     this.addEventListenerOnMap();
     this.$containter = this.mapService.getMapContainer() as HTMLElement;
+    this.initHander();
   }
 
   public destroy() {
@@ -58,6 +76,15 @@ export default class InteractionService extends EventEmitter
 
   public triggerActive(id: number): void {
     this.emit(InteractionEvent.Active, { featureId: id });
+  }
+
+  public addInteraction(
+    handlerName: string,
+    handler: IHandler,
+    allowed?: string[],
+  ) {
+    this.handlers.push({ handlerName, handler, allowed });
+    this.handlersById[handlerName] = handler;
   }
 
   private addEventListenerOnMap() {
@@ -208,5 +235,74 @@ export default class InteractionService extends EventEmitter
         this.emit(InteractionEvent.Hover, { x, y, lngLat, type });
       }, 400);
     }
+  }
+
+  private initHander() {
+    const el = this.mapService.getMapContainer() as HTMLElement;
+    this.$listeners = [
+      [el, 'touchstart', { passive: false }],
+      [el, 'touchmove', { passive: false }],
+      [el, 'touchend', undefined],
+      [el, 'touchcancel', undefined],
+
+      [el, 'mousedown', undefined],
+      [el, 'mousemove', undefined],
+      [el, 'mouseup', undefined],
+
+      // Bind window-level event listeners for move and up/end events. In the absence of
+      // the pointer capture API, which is not supported by all necessary platforms,
+      // window-level event listeners give us the best shot at capturing events that
+      // fall outside the map canvas element. Use `{capture: true}` for the move event
+      // to prevent map move events from being fired during a drag.
+      // @ts-ignore
+      [window.document, 'mousemove', { capture: true }],
+      // @ts-ignore
+      [window.document, 'mouseup', undefined],
+
+      [el, 'mouseover', undefined],
+      [el, 'mouseout', undefined],
+      [el, 'dblclick', undefined],
+      [el, 'click', undefined],
+
+      [el, 'keydown', { capture: false }],
+      [el, 'keyup', undefined],
+
+      [el, 'wheel', { passive: false }],
+      [el, 'contextmenu', undefined],
+      // @ts-ignore
+      [window, 'blur', undefined],
+    ];
+
+    for (const [target, type, listenerOptions] of this.$listeners) {
+      // @ts-ignore
+      DOM.addEventListener(
+        target,
+        type,
+        // @ts-ignore
+        target === window.document ? this.handleWindowEvent : this.handleEvent,
+        listenerOptions || {},
+      );
+    }
+  }
+
+  private destroyEvent() {
+    for (const [target, type, listenerOptions] of this.$listeners) {
+      // @ts-ignore
+      DOM.removeEventListener(
+        target,
+        type,
+        // @ts-ignore
+        target === window.document ? this.handleWindowEvent : this.handleEvent,
+        listenerOptions || {},
+      );
+    }
+  }
+
+  private handleWindowEvent(e: InputEvent) {
+    return null;
+  }
+
+  private handleEvent(e: InputEvent, eventName?: string) {
+    return null;
   }
 }

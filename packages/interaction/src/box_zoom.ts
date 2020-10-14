@@ -1,7 +1,7 @@
 // @ts-ignore
 import { IMapService } from '@antv/l7-core';
 import { DOM, Point } from '@antv/l7-utils';
-import { Event } from '../events/event';
+import { Event } from './events/event';
 
 /**
  * The `BoxZoomHandler` allows the user to zoom the map to fit within a bounding box.
@@ -28,7 +28,7 @@ class BoxZoomHandler {
     },
   ) {
     this.map = map;
-    this.el = map.getMapCanvasContainer();
+    this.el = map.getMapCanvasContainer() as HTMLElement;
     this.container = map.getMapContainer() as HTMLElement;
     this.clickTolerance = options.clickTolerance || 1;
   }
@@ -150,9 +150,9 @@ class BoxZoomHandler {
       return {
         // TODO
         // cameraAnimation: (map: IMapService) =>
-        // map.fitScreenCoordinates(p0, p1, this.map.getBearing(), {
-        //   linear: true,
-        // }),
+        //   map.fitScreenCoordinates(p0, p1, this.map.getRotation(), {
+        //     linear: true,
+        //   }),
       };
     }
   }
