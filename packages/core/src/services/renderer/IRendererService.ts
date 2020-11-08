@@ -42,7 +42,7 @@ export interface IReadPixelsOptions {
 }
 
 export interface IRendererService {
-  init(canvas: HTMLCanvasElement, cfg: IRenderConfig): Promise<void>;
+  init(container: HTMLElement, cfg: IRenderConfig): Promise<void>;
   clear(options: IClearOptions): void;
   createModel(options: IModelInitializationOptions): IModel;
   createAttribute(options: IAttributeInitializationOptions): IAttribute;
@@ -57,8 +57,13 @@ export interface IRendererService {
   getViewportSize(): { width: number; height: number };
   getContainer(): HTMLElement | null;
   getCanvas(): HTMLCanvasElement | null;
-  getGLContext(): WebGLRenderingContext;
-  viewport(size: { x: number; y: number; width: number; height: number }): void;
+  getGLContext():unknown;
+  viewport(size: {
+    x: number;
+    y: number;
+    width?: number;
+    height?: number;
+  }): void;
   readPixels(options: IReadPixelsOptions): Uint8Array;
   setBaseState(): void;
   setCustomLayerDefaults(): void;

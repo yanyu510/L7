@@ -20,6 +20,7 @@ import {
   ITexture2D,
   ITexture2DInitializationOptions,
 } from '@antv/l7-core';
+import { DOM } from '@antv/l7-utils';
 import { injectable } from 'inversify';
 import regl from 'regl';
 import ReglAttribute from './ReglAttribute';
@@ -42,11 +43,12 @@ export default class ReglRendererService implements IRendererService {
   private isDirty: boolean;
 
   public async init(
-    canvas: HTMLCanvasElement,
+    container: HTMLDivElement,
     cfg: IRenderConfig,
   ): Promise<void> {
-    // this.$container = $container;
-    this.canvas = canvas;
+    this.$container = container;
+    this.canvas = DOM.create('canvas', '', container) as HTMLCanvasElement;
+    this.initCanvas();
     // tslint:disable-next-line:typedef
     this.gl = await new Promise((resolve, reject) => {
       regl({
@@ -141,11 +143,12 @@ export default class ReglRendererService implements IRendererService {
     width: number;
     height: number;
   }) => {
+    this.initCanvas();
     // use WebGL context directly
     // @see https://github.com/regl-project/regl/blob/gh-pages/API.md#unsafe-escape-hatch
-    this.gl._gl.viewport(x, y, width, height);
-    this.width = width;
-    this.height = height;
+    this.gl._gl.viewport(x, y, this.width, this.height);
+    // this.width = width;
+    // this.height = height;
     this.gl._refresh();
   };
 
@@ -179,7 +182,7 @@ export default class ReglRendererService implements IRendererService {
     return this.canvas;
   };
 
-  public getGLContext = () => {
+  public getGLContext = ():WebGLRenderingContext => {
     return this.gl._gl;
   };
 
@@ -220,4 +223,17 @@ export default class ReglRendererService implements IRendererService {
     // @see https://github.com/regl-project/regl/blob/gh-pages/API.md#clean-up
     this.gl.destroy();
   };
+
+  private initCanvas() {
+    const pixelRatio = window.devicePixelRatio;
+    const w = this.$container?.clientWidth || 400;
+    const h = this.$container?.clientHeight || 300;
+    const canvas = this.canvas;
+    canvas.width = w * pixelRatio;
+    canvas.height = h * pixelRatio;
+    canvas.style.width = `${w}px`;
+    canvas.style.height = `${h}px`;
+    this.width = canvas.width;
+    this.height = canvas.height;
+  }
 }

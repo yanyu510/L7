@@ -36,7 +36,7 @@ export class ThreeRenderService implements IThreeRenderService {
 
   public init() {
     const canvas = this.rendererService.getCanvas() as HTMLCanvasElement;
-    const gl = this.rendererService.getGLContext();
+    const gl = this.rendererService.getGLContext() as WebGLRenderingContext;
     if (canvas && gl) {
       const center = this.mapService.getCenter();
       this.center = this.mapService.lngLatToMercator(

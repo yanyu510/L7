@@ -1,6 +1,7 @@
 // @ts-ignore
 import { Scene, PolygonLayer } from '@antv/l7-mini';
 import { Map } from '@antv/l7-maps';
+// import { FillLayer } from '@antv/l7-glayers'
 import * as React from 'react';
 
 export default class ScaleComponent extends React.Component {
@@ -20,33 +21,37 @@ export default class ScaleComponent extends React.Component {
         zoom: 2,
       }),
     });
-    fetch(
-      'https://gw.alipayobjects.com/os/basement_prod/d2e0e930-fd44-4fca-8872-c1037b0fee7b.json',
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        const layer = new PolygonLayer({
-          name: '01',
-        });
+    const data = {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "properties": {},
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              107.57812499999999,
+              36.31512514748051
+            ]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {},
+          "geometry": {
+            "type": "Point",
+            "coordinates": [
+              111.09374999999999,
+              28.76765910569123
+            ]
+          }
+        }
+      ]
+    }
+    // const layer  = new FillLayer().source(data).size(10).color('red');
+    // scene.addLayer(layer);
+    // console.log(layer);
 
-        layer
-          .source(data)
-          .size('name', [0, 10000, 50000, 30000, 100000])
-          .color('name', [
-            '#2E8AE6',
-            '#69D1AB',
-            '#DAF291',
-            '#FFD591',
-            '#FF7A45',
-            '#CF1D49',
-          ])
-          .shape('fill')
-          .select(true)
-          .style({
-            opacity: 1.0,
-          });
-        scene.addLayer(layer);
-      });
   }
 
   public render() {

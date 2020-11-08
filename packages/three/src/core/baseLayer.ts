@@ -67,7 +67,7 @@ export default class ThreeJSLayer
     }
   }
   public renderModels() {
-    const gl = this.rendererService.getGLContext();
+    const gl = this.rendererService.getGLContext() as WebGLRenderingContext;
     this.rendererService.setCustomLayerDefaults();
     const cullFace =
       this.mapService.constructor.name === 'AMapService' ? gl.BACK : gl.FRONT;

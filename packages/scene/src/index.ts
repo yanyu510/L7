@@ -73,7 +73,7 @@ class Scene
     // 绑定渲染引擎服务
     sceneContainer
       .bind<IRendererService>(TYPES.IRendererService)
-      .to(ReglRendererService)
+      .to(GCanvasRendererService)
       .inSingletonScope();
 
     // 依赖注入

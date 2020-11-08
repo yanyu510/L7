@@ -1,4 +1,4 @@
-import { gl } from '@antv/l7-core';
+import { gl, IRendererService } from '@antv/l7-core';
 import 'reflect-metadata';
 import regl from 'regl';
 import copy from '../../../../core/src/shaders/post-processing/copy.glsl';
@@ -179,6 +179,7 @@ describe('ReglRendererService', () => {
       createFramebuffer,
       useFramebuffer,
       readPixels,
+      // @ts-ignore
       destroy,
     } = rendererService;
     const model = createModel({

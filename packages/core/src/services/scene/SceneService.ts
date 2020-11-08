@@ -174,15 +174,13 @@ export default class Scene extends EventEmitter implements ISceneService {
       this.$container = $container;
 
       if ($container) {
-        this.canvas = DOM.create('canvas', '', $container) as HTMLCanvasElement;
-        this.setCanvas();
+        // this.canvas = DOM.create('canvas', '', $container) as HTMLCanvasElement;
+        // this.setCanvas();
         await this.rendererService.init(
           // @ts-ignore
-          this.canvas,
+          $container,
           this.configService.getSceneConfig(this.id) as IRenderConfig,
         );
-        // this.initContainer();
-        // window.addEventListener('resize', this.handleWindowResized);
         elementResizeEvent(
           this.$container as HTMLDivElement,
           this.handleWindowResized,
@@ -193,7 +191,7 @@ export default class Scene extends EventEmitter implements ISceneService {
       } else {
         this.logger.error('容器 id 不存在');
       }
-      this.pickingService.init(this.id);
+      // this.pickingService.init(this.id);
 
       this.logger.debug(`scene ${this.id} renderer loaded`);
     });
@@ -287,7 +285,12 @@ export default class Scene extends EventEmitter implements ISceneService {
     this.emit('resize');
     // @ts-check
     if (this.$container) {
-      this.initContainer();
+      this.rendererService.viewport({
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+      });
       DOM.triggerResize();
       this.coordinateSystemService.needRefresh = true;
 
@@ -296,22 +299,13 @@ export default class Scene extends EventEmitter implements ISceneService {
     }
   };
   private initContainer() {
-    const pixelRatio = window.devicePixelRatio;
-    const w = this.$container?.clientWidth || 400;
-    const h = this.$container?.clientHeight || 300;
-    const canvas = this.canvas;
-    if (canvas) {
-      canvas.width = w * pixelRatio;
-      canvas.height = h * pixelRatio;
-      canvas.style.width = `${w}px`;
-      canvas.style.height = `${h}px`;
-    }
-    this.rendererService.viewport({
-      x: 0,
-      y: 0,
-      width: pixelRatio * w,
-      height: pixelRatio * h,
-    });
+    this.setCanvas();
+    // this.rendererService.viewport({
+    //   x: 0,
+    //   y: 0,
+    //   width: pixelRatio * w,
+    //   height: pixelRatio * h,
+    // });
   }
 
   private setCanvas() {
