@@ -1,7 +1,2 @@
-'use strict';
-
-module.exports = glayers;
-
-function glayers() {
-  // TODO
-}
+import BaseLayer from './core/BaseLayer';
+export { BaseLayer };
