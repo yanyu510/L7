@@ -53,8 +53,8 @@ export default class GCanvasRendererService implements IRendererService {
     throw this.canvas;
   };
   public getGLContext = (): Canvas => {
-    return this.g
-  }
+    return this.g;
+  };
   public readPixels(options: IReadPixelsOptions): Uint8Array {
     throw new Error('Method not implemented.');
   }

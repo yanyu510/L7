@@ -8,7 +8,7 @@ interface IPointLayerStyleOptions {
 export default class PointLayer extends BaseLayer<IPointLayerStyleOptions> {
   public buildModels() {
     const grender = this.rendererService.getGLContext();
-    console.log('build')
+    console.log('build');
     // this.layerModel = new PointModels[modelType](this);
     // this.models = this.layerModel.initModels();
   }

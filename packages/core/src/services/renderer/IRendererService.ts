@@ -57,7 +57,7 @@ export interface IRendererService {
   getViewportSize(): { width: number; height: number };
   getContainer(): HTMLElement | null;
   getCanvas(): HTMLCanvasElement | null;
-  getGLContext():unknown;
+  getGLContext(): unknown;
   viewport(size: {
     x: number;
     y: number;

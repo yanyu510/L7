@@ -1,4 +1,3 @@
-import BaseLayer from './core/BaseLayer';
 import {
   container,
   DataMappingPlugin,
@@ -14,6 +13,7 @@ import {
   UpdateModelPlugin,
   UpdateStyleAttributePlugin,
 } from '@antv/l7-core';
+import BaseLayer from './core/BaseLayer';
 
 import FillLayer from './point/fill';
 

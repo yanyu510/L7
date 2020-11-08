@@ -22,36 +22,29 @@ export default class ScaleComponent extends React.Component {
       }),
     });
     const data = {
-      "type": "FeatureCollection",
-      "features": [
+      type: 'FeatureCollection',
+      features: [
         {
-          "type": "Feature",
-          "properties": {},
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              107.57812499999999,
-              36.31512514748051
-            ]
-          }
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Point',
+            coordinates: [107.57812499999999, 36.31512514748051],
+          },
         },
         {
-          "type": "Feature",
-          "properties": {},
-          "geometry": {
-            "type": "Point",
-            "coordinates": [
-              111.09374999999999,
-              28.76765910569123
-            ]
-          }
-        }
-      ]
-    }
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Point',
+            coordinates: [111.09374999999999, 28.76765910569123],
+          },
+        },
+      ],
+    };
     // const layer  = new FillLayer().source(data).size(10).color('red');
     // scene.addLayer(layer);
     // console.log(layer);
-
   }
 
   public render() {

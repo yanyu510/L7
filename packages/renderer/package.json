@@ -1,6 +1,6 @@
 {
   "name": "@antv/l7-renderer",
-  "version": "2.2.28",
+  "version": "2.2.41",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -27,8 +27,8 @@
   },
   "dependencies": {
     "@antv/g": "^3.4.10",
-    "@antv/g-canvas": "^0.4.14",
-    "@antv/l7-core": "2.2.28",
+    "@antv/g-canvas": "^0.4.15",
+    "@antv/l7-core": "2.2.41",
     "@babel/runtime": "^7.7.7",
     "antd": "^4.2.4",
     "inversify": "^5.0.1",

@@ -148,17 +148,18 @@ export default class InteractionService extends EventEmitter
       clientY -= top;
     }
     const lngLat = this.mapService.containerToLngLat([clientX, clientY]);
-    return { x: clientX, y: clientY, lngLat, type };
+    return { x: clientX, y: clientY, lngLat, type, target: target.srcEvent };
   }
   private onHover = (event: MouseEvent) => {
-    let { x, y } = event;
+    const { clientX, clientY } = event;
+    let x = clientX;
+    let y = clientY;
     const type = event.type;
-
     const $containter = this.mapService.getMapContainer();
     if ($containter) {
       const { top, left } = $containter.getBoundingClientRect();
-      x -= left;
-      y -= top;
+      x = x - left - $containter.clientLeft;
+      y = y - top - $containter.clientTop;
     }
     const lngLat = this.mapService.containerToLngLat([x, y]);
 
@@ -179,6 +180,7 @@ export default class InteractionService extends EventEmitter
         y,
         lngLat,
         type,
+        target: event,
       });
     }
   };

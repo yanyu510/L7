@@ -16,11 +16,12 @@ export default class HexagonLayerDemo extends React.Component {
   public async componentDidMount() {
     const scene = new Scene({
       id: 'map',
-      map: new GaodeMap({
+      map: new Mapbox({
         pitch: 0,
         style: 'blank',
         center: [140.067171, 36.26186],
-        zoom: 0,
+        zoom: 3,
+
         maxZoom: 0,
       }),
     });
@@ -41,7 +42,7 @@ export default class HexagonLayerDemo extends React.Component {
               },
               transforms: [
                 {
-                  type: 'hexagon',
+                  type: 'grid',
                   size: 200000,
                   field: 'v',
                   method: 'sum',
@@ -51,7 +52,7 @@ export default class HexagonLayerDemo extends React.Component {
             .size('sum', (value) => {
               return value * 20;
             })
-            .shape('hexagonColumn')
+            .shape('squareColumn')
             .color(
               'count',
               [
@@ -64,11 +65,10 @@ export default class HexagonLayerDemo extends React.Component {
               ].reverse(),
             )
             .style({
-              coverage: 0.9,
+              coverage: 1,
               angle: 0,
             });
           scene.addLayer(pointLayer);
-          console.log(pointLayer.getSource());
           this.scene = scene;
         });
     });

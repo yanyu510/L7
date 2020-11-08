@@ -123,10 +123,10 @@
     d3-timer "^1.0.9"
     detect-browser "^5.1.0"
 
-"@antv/g-canvas@^0.4.14":
-  version "0.4.14"
-  resolved "https://registry.npmjs.org/@antv/g-canvas/-/g-canvas-0.4.14.tgz#fb97afdc997ad8fdfd07a4104547c46c61a1b28a"
-  integrity sha512-BPpEbHvszEPQHhssPQrIOF2zKztiogabhiBQ/MCX3qvLUXgBRRzN6ktwS816fQPa82RYiGUmzEUDhgCXUWXAcg==
+"@antv/g-canvas@^0.4.15":
+  version "0.4.15"
+  resolved "https://registry.npmjs.org/@antv/g-canvas/-/g-canvas-0.4.15.tgz#81ac1be269d96280202ffefa02a39f060b1a8c07"
+  integrity sha512-+Du37T7dhU1F8GiaWu+EMtBDHoYOg8UzCoVBFD+cUEs/joLaOVkup3drvGC/6MSyLiI32y/ZHuuc08pZIP7PzA==
   dependencies:
     "@antv/g-base" "^0.4.7"
     "@antv/g-math" "^0.1.3"

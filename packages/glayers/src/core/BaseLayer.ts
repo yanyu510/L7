@@ -188,10 +188,6 @@ export default class BaseLayer<ChildLayerStyleOptions = {}> extends EventEmitter
 
   public addPlugin(plugin: ILayerPlugin) {
     // TODO: 控制插件注册顺序
-    // @example:
-    // pointLayer.addPlugin(new MyCustomPlugin(), {
-    //   before: 'L7BuiltinPlugin'
-    // });
     this.plugins.push(plugin);
     return this;
   }

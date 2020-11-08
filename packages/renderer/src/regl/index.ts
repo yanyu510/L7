@@ -182,7 +182,7 @@ export default class ReglRendererService implements IRendererService {
     return this.canvas;
   };
 
-  public getGLContext = ():WebGLRenderingContext => {
+  public getGLContext = (): WebGLRenderingContext => {
     return this.gl._gl;
   };
 

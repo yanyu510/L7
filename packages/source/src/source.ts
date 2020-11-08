@@ -8,8 +8,14 @@ import {
   ISourceCFG,
   ITransform,
 } from '@antv/l7-core';
-import { extent } from '@antv/l7-utils';
-import { BBox } from '@turf/helpers';
+import { bBoxToBounds, extent, padBounds } from '@antv/l7-utils';
+import {
+  BBox,
+  Feature,
+  FeatureCollection,
+  Geometries,
+  Properties,
+} from '@turf/helpers';
 import { EventEmitter } from 'eventemitter3';
 import { cloneDeep, isFunction, isString } from 'lodash';
 // @ts-ignore
@@ -78,7 +84,11 @@ export default class Source extends EventEmitter {
   }
   public updateClusterData(zoom: number): void {
     const { method = 'sum', field } = this.clusterOptions;
-    let data = this.clusterIndex.getClusters(this.extent, Math.floor(zoom));
+    const newBounds = padBounds(bBoxToBounds(this.extent), 2);
+    let data = this.clusterIndex.getClusters(
+      newBounds[0].concat(newBounds[1]),
+      Math.floor(zoom),
+    );
     this.clusterOptions.zoom = zoom;
     data.forEach((p: any) => {
       if (!p.id) {
