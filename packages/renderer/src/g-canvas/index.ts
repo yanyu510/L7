@@ -32,9 +32,7 @@ export default class GCanvasRendererService {
     this.height = height;
   };
 
-  public createModel() {
-
-  }
+  public createModel() {}
 
   public clear() {}
   public destroy() {}

@@ -1,4 +1,3 @@
-
 import { SyncBailHook, SyncHook, SyncWaterfallHook } from '@antv/async-hook';
 import {
   IActiveOption,
@@ -47,7 +46,8 @@ import { isFunction, isObject } from 'lodash';
  * 分配 layer id
  */
 let layerIdCounter = 0;
-export default class BaseLayer<ChildLayerStyleOptions = {}> extends EventEmitter implements ILayer {
+export default class BaseLayer<ChildLayerStyleOptions = {}> extends EventEmitter
+  implements ILayer {
   public id: string = `${layerIdCounter++}`;
   public name: string = `${layerIdCounter}`;
   public type: string;
@@ -84,7 +84,6 @@ export default class BaseLayer<ChildLayerStyleOptions = {}> extends EventEmitter
     data: any;
     options?: ISourceCFG;
   };
-
 
   @lazyInject(TYPES.IGlobalConfigService)
   protected readonly configService: IGlobalConfigService;
@@ -200,7 +199,5 @@ export default class BaseLayer<ChildLayerStyleOptions = {}> extends EventEmitter
   public init() {
     const sceneId = this.container.get<string>(TYPES.SceneID);
     this.hooks.init.call();
-
   }
-
 }

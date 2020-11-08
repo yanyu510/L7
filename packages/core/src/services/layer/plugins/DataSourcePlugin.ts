@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { TYPES } from '../../../types';
-import { IMapService } from '../../map/IMapService'
+import { IMapService } from '../../map/IMapService';
 import { ILayer, ILayerPlugin } from '../ILayerService';
 
 @injectable()
