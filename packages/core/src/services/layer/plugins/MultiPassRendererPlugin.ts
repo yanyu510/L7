@@ -47,8 +47,10 @@ export class MultiPassRendererPlugin implements ILayerPlugin {
       normalPassFactory,
     }: {
       rendererService: IRendererService;
-      postProcessingPassFactory: (name: string) => IPostProcessingPass<unknown>;
-      normalPassFactory: (name: string) => IPass<unknown>;
+      postProcessingPassFactory?: (
+        name: string,
+      ) => IPostProcessingPass<unknown>;
+      normalPassFactory?: (name: string) => IPass<unknown>;
     },
   ) {
     layer.hooks.init.tap('MultiPassRendererPlugin', () => {
@@ -64,6 +66,7 @@ export class MultiPassRendererPlugin implements ILayerPlugin {
         layer.multiPassRenderer = this.createMultiPassRenderer(
           layer,
           passes,
+          // @ts-ignore
           postProcessingPassFactory,
           normalPassFactory,
         );

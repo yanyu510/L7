@@ -13,7 +13,7 @@ import {
 } from '../IStyleAttributeService';
 
 @injectable()
-export class DataMappingPlugin implements ILayerPlugin {
+export class GDataMappingPlugin implements ILayerPlugin {
   @inject(TYPES.IGlobalConfigService)
   private readonly configService: IGlobalConfigService;
 
@@ -104,26 +104,26 @@ export class DataMappingPlugin implements ILayerPlugin {
   ): IEncodeFeature[] {
     return data.map((record: IParseDataItem, i) => {
       const preRecord = predata ? predata[i] : {};
-      // const pixel = this.map.lngLatToPixel(
-      //   record.coordinates as [number, number],
-      // );
+      const pixel = this.map.lngLatToPixel(
+        record.coordinates as [number, number],
+      );
       const encodeRecord: IEncodeFeature = {
         id: record._id,
-        coordinates: record.coordinates,
+        coordinates: [pixel.x, pixel.y],
         ...preRecord,
       };
       attributes
         .filter((attribute) => attribute.scale !== undefined)
         .forEach((attribute: IStyleAttribute) => {
-          let values = this.applyAttributeMapping(attribute, record);
+          const values = this.applyAttributeMapping(attribute, record);
           attribute.needRemapping = false;
 
           // TODO: 支持每个属性配置 postprocess
-          if (attribute.name === 'color') {
-            values = values.map((c: unknown) => {
-              return rgb2arr(c as string);
-            });
-          }
+          // if (attribute.name === 'color') {
+          //   values = values.map((c: unknown) => {
+          //     return rgb2arr(c as string);
+          //   });
+          // }
           // @ts-ignore
           encodeRecord[attribute.name] =
             Array.isArray(values) && values.length === 1 ? values[0] : values;

@@ -61,6 +61,7 @@ export * from './services/renderer/gl';
 
 /** 图层插件 */
 export * from './services/layer/plugins/DataMappingPlugin';
+export * from './services/layer/plugins/GDataMappingPlugin';
 export * from './services/layer/plugins/DataSourcePlugin';
 export * from './services/layer/plugins/FeatureScalePlugin';
 export * from './services/layer/plugins/LayerAnimateStylePlugin';

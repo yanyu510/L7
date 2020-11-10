@@ -22,6 +22,7 @@ const TYPES = {
   IStyleAttributeService: Symbol.for('IStyleAttributeService'),
   ILayer: Symbol.for('ILayer'),
   ILayerPlugin: Symbol.for('ILayerPlugin'),
+  IGLayerPlugin: Symbol.for('IGLayerPlugin'),
   INormalPass: Symbol.for('INormalPass'),
   IPostProcessor: Symbol.for('IPostProcessor'),
   IPostProcessingPass: Symbol.for('IPostProcessingPass'),

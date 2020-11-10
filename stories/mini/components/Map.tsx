@@ -1,50 +1,53 @@
 // @ts-ignore
-import { Scene, PolygonLayer } from '@antv/l7-mini';
+import { PointLayer } from '@antv/l7-glayers';
 import { Map } from '@antv/l7-maps';
-// import { FillLayer } from '@antv/l7-glayers'
+import { Scene, ILayer } from '@antv/l7-mini';
 import * as React from 'react';
 
 export default class ScaleComponent extends React.Component {
   private scene: Scene;
 
   public componentWillUnmount() {
-    this.scene.destroy();
+    // this.scene.destroy();
   }
 
   public async componentDidMount() {
     const scene = new Scene({
       id: 'map',
+      render: 'canvas',
       map: new Map({
         hash: true,
-        center: [110.19382669582967, 30.258134],
-        pitch: 0,
-        zoom: 2,
+        center: [121.435159, 31.256971],
+        zoom: 14.89,
+        minZoom: 10,
       }),
     });
-    const data = {
-      type: 'FeatureCollection',
-      features: [
-        {
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'Point',
-            coordinates: [107.57812499999999, 36.31512514748051],
-          },
-        },
-        {
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'Point',
-            coordinates: [111.09374999999999, 28.76765910569123],
-          },
-        },
-      ],
-    };
+    const data = await (
+      await fetch(
+        'https://gw.alipayobjects.com/os/basement_prod/893d1d5f-11d9-45f3-8322-ee9140d288ae.json',
+      )
+    ).json();
     // const layer  = new FillLayer().source(data).size(10).color('red');
-    // scene.addLayer(layer);
-    // console.log(layer);
+    const layer = new PointLayer();
+    layer
+      .source(data, {
+        parser: {
+          type: 'json',
+          x: 'longitude',
+          y: 'latitude',
+        },
+      })
+      .color('red')
+      .size('unit_price', [10, 25])
+      .active(true)
+      .color('name', ['#5B8FF9', '#5CCEA1', '#5D7092', '#F6BD16', '#E86452'])
+      .style({
+        opacity: 1,
+        strokeWidth: 2,
+        stroke: '#f00',
+      });
+    scene.addLayer(layer);
+    console.log(layer);
   }
 
   public render() {

@@ -63,19 +63,25 @@ class Scene
   private container: Container;
 
   public constructor(config: ISceneConfig) {
-    const { id, map } = config;
+    const { id, map, render } = config;
     // 创建场景容器
     const sceneContainer = createSceneContainer();
     this.container = sceneContainer;
     // 绑定地图服务
     map.setContainer(sceneContainer, id);
+    if (render === 'canvas') {
+      sceneContainer
+        .bind<IRendererService>(TYPES.IRendererService)
+        .to(GCanvasRendererService)
+        .inSingletonScope();
+    } else {
+      sceneContainer
+        .bind<IRendererService>(TYPES.IRendererService)
+        .to(ReglRendererService)
+        .inSingletonScope();
+    }
 
     // 绑定渲染引擎服务
-    sceneContainer
-      .bind<IRendererService>(TYPES.IRendererService)
-      .to(GCanvasRendererService)
-      .inSingletonScope();
-
     // 依赖注入
     this.sceneService = sceneContainer.get<ISceneService>(TYPES.ISceneService);
     this.mapService = sceneContainer.get<IMapService<unknown>>(

@@ -14,6 +14,7 @@ const defaultSceneConfig: Partial<ISceneConfig & IRenderConfig> = {
   logoPosition: 'bottomleft',
   logoVisible: true,
   antialias: true,
+  render: 'webgl',
   preserveDrawingBuffer: false,
   pickBufferScale: 1.0,
   fitBoundsOptions: {

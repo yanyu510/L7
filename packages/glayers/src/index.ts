@@ -1,8 +1,8 @@
 import {
   container,
-  DataMappingPlugin,
   DataSourcePlugin,
   FeatureScalePlugin,
+  GDataMappingPlugin,
   ILayerPlugin,
   LayerAnimateStylePlugin,
   LayerModelPlugin,
@@ -14,8 +14,7 @@ import {
   UpdateStyleAttributePlugin,
 } from '@antv/l7-core';
 import BaseLayer from './core/BaseLayer';
-
-import FillLayer from './point/fill';
+import PointLayer from './point/fill';
 
 // import ConfigSchemaValidationPlugin from './plugins/ConfigSchemaValidationPlugin';
 
@@ -24,43 +23,43 @@ import FillLayer from './point/fill';
  * @see /dev-docs/ConfigSchemaValidation.md
  */
 // container
-//   .bind<ILayerPlugin>(TYPES.ILayerPlugin)
+//   .bind<ILayerPlugin>(TYPES.IGLayerPlugin)
 //   .to(ConfigSchemaValidationPlugin)
 //   .inRequestScope();
 /**
  * 获取 Source
  */
 container
-  .bind<ILayerPlugin>(TYPES.ILayerPlugin)
+  .bind<ILayerPlugin>(TYPES.IGLayerPlugin)
   .to(DataSourcePlugin)
   .inRequestScope();
 /**
  * 根据 StyleAttribute 创建 VertexAttribute
  */
 container
-  .bind<ILayerPlugin>(TYPES.ILayerPlugin)
+  .bind<ILayerPlugin>(TYPES.IGLayerPlugin)
   .to(RegisterStyleAttributePlugin)
   .inRequestScope();
 /**
  * 根据 Source 创建 Scale
  */
 container
-  .bind<ILayerPlugin>(TYPES.ILayerPlugin)
+  .bind<ILayerPlugin>(TYPES.IGLayerPlugin)
   .to(FeatureScalePlugin)
   .inRequestScope();
 /**
  * 使用 Scale 进行数据映射
  */
 container
-  .bind<ILayerPlugin>(TYPES.ILayerPlugin)
-  .to(DataMappingPlugin)
+  .bind<ILayerPlugin>(TYPES.IGLayerPlugin)
+  .to(GDataMappingPlugin)
   .inRequestScope();
 
 /**
  * 更新地图样式配置项 如active, show, hide
  */
 container
-  .bind<ILayerPlugin>(TYPES.ILayerPlugin)
+  .bind<ILayerPlugin>(TYPES.IGLayerPlugin)
   .to(LayerStylePlugin)
   .inRequestScope();
 
@@ -68,7 +67,7 @@ container
  * 负责属性更新
  */
 container
-  .bind<ILayerPlugin>(TYPES.ILayerPlugin)
+  .bind<ILayerPlugin>(TYPES.IGLayerPlugin)
   .to(UpdateStyleAttributePlugin)
   .inRequestScope();
 
@@ -76,7 +75,7 @@ container
  * 负责Model更新
  */
 container
-  .bind<ILayerPlugin>(TYPES.ILayerPlugin)
+  .bind<ILayerPlugin>(TYPES.IGLayerPlugin)
   .to(UpdateModelPlugin)
   .inRequestScope();
 
@@ -84,7 +83,7 @@ container
  * 传入相机坐标系参数
  */
 container
-  .bind<ILayerPlugin>(TYPES.ILayerPlugin)
+  .bind<ILayerPlugin>(TYPES.IGLayerPlugin)
   .to(ShaderUniformPlugin)
   .inRequestScope();
 
@@ -92,12 +91,13 @@ container
  * 传入动画参数
  */
 container
-  .bind<ILayerPlugin>(TYPES.ILayerPlugin)
+  .bind<ILayerPlugin>(TYPES.IGLayerPlugin)
   .to(LayerAnimateStylePlugin)
   .inRequestScope();
+
 container
-  .bind<ILayerPlugin>(TYPES.ILayerPlugin)
+  .bind<ILayerPlugin>(TYPES.IGLayerPlugin)
   .to(LayerModelPlugin)
   .inRequestScope();
 
-export { BaseLayer, FillLayer };
+export { BaseLayer, PointLayer };

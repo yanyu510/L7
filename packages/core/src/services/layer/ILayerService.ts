@@ -87,7 +87,7 @@ export interface ILayer {
   styleNeedUpdate: boolean;
   layerModel: ILayerModel;
   dataState: IDataState; // 数据流状态
-  pickedFeatureID: number | null;
+  pickedFeatureID?: number | null;
   hooks: {
     init: SyncBailHook;
     afterInit: SyncBailHook;
@@ -208,8 +208,10 @@ export interface ILayerPlugin {
       rendererService: IRendererService;
       mapService: IMapService;
       styleAttributeService: IStyleAttributeService;
-      postProcessingPassFactory: (name: string) => IPostProcessingPass<unknown>;
-      normalPassFactory: (name: string) => IPass<unknown>;
+      postProcessingPassFactory?: (
+        name: string,
+      ) => IPostProcessingPass<unknown>;
+      normalPassFactory?: (name: string) => IPass<unknown>;
     },
   ): void;
 }
