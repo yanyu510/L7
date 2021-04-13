@@ -338,10 +338,7 @@ export default class MaptalksService
     this.map.on('moving', this.handleCameraChanged);
     this.map.on('zooming', this.handleCameraChanged);
     this.map.on('dragrotating',this.handleCameraChanged);
-    this.map.on('click', (e:any) => {
-      console.log("maptalks click");
-      console.log(e)
-    })
+    this.map.on('viewchange', this.handleCameraChanged);
     // 不同于高德地图，需要手动触发首次渲染
     this.handleCameraChanged();
       }
