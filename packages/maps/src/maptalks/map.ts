@@ -21,7 +21,7 @@ import {
 import { DOM } from '@antv/l7-utils';
 import { mat4, vec2, vec3 } from 'gl-matrix';
 import { inject, injectable } from 'inversify';
-import maptalks, { Map, Coordinate, Point, Extent,TileLayer } from 'maptalks';
+import * as maptalks from 'maptalks';
 
 import { IMaptalksInstance } from '../../typings/index';
 import Viewport from './Viewport';
@@ -41,8 +41,8 @@ const LNGLAT_OFFSET_ZOOM_THRESHOLD = 12;
  */
 @injectable()
 export default class MaptalksService
-  implements IMapService<Map & IMaptalksInstance> {
-  public map: Map & IMaptalksInstance;
+  implements IMapService<maptalks.Map & IMaptalksInstance> {
+  public map: maptalks.Map & IMaptalksInstance;
 
   @inject(TYPES.MapConfig)
   private readonly config: Partial<IMapConfig>;
@@ -118,7 +118,7 @@ export default class MaptalksService
   }
 
   public setCenter(lnglat: [number, number]): void {
-    this.map.setCenter(new Coordinate(lnglat));
+    this.map.setCenter(new maptalks.Coordinate(lnglat));
   }
 
   public getPitch(): number {
@@ -156,15 +156,15 @@ export default class MaptalksService
   }
 
   public panTo(p: [number, number]): void {
-    this.map.panTo(new Coordinate(p));
+    this.map.panTo(new maptalks.Coordinate(p));
   }
 
   public panBy(pixel: [number, number]): void {
-    this.map.panBy(new Point(pixel));
+    this.map.panBy(new maptalks.Point(pixel));
   }
 
   public fitBounds(bound: Bounds, zoomOffset: number): void {
-    this.map.fitExtent(new Extent(bound[0][0],bound[0][1], bound[1][0],bound[1][1]),zoomOffset);
+    this.map.fitExtent(new maptalks.Extent(bound[0][0],bound[0][1], bound[1][0],bound[1][1]),zoomOffset);
   }
 
   public setMaxZoom(max: number): void {
@@ -213,7 +213,7 @@ export default class MaptalksService
   }
 
   public setZoomAndCenter(zoom: number, center: [number, number]): void {
-    this.map.setCenterAndZoom(new Coordinate(center), zoom);
+    this.map.setCenterAndZoom(new maptalks.Coordinate(center), zoom);
   }
 
   public setMapStyle(style: any): void {
@@ -221,12 +221,12 @@ export default class MaptalksService
   }
   // TODO: 计算像素坐标
   public pixelToLngLat(pixel: [number, number]): ILngLat {
-    const coordinate = this.map.viewPointToCoord(new Point(pixel)).toArray()
+    const coordinate = this.map.viewPointToCoord(new maptalks.Point(pixel)).toArray()
     return {lng: coordinate[0], lat: coordinate[1]}
   }
 
   public lngLatToPixel(lnglat: [number, number]): IPoint {
-    return this.map.coordToViewPoint(new Coordinate(lnglat)).toJSON() as IPoint
+    return this.map.coordToViewPoint(new maptalks.Coordinate(lnglat)).toJSON() as IPoint
   }
 
   public containerToLngLat(pixel: [number, number]): ILngLat {
@@ -316,19 +316,19 @@ export default class MaptalksService
       this.$mapContainer = this.creatAmapContainer(id);
       // @ts-ignore
      
-      this.map = new Map(
+      this.map = new maptalks.Map(
         this.$mapContainer,
         {
           center: center,
           zoom: zoom,
           ...rest,
-          baseLayer: new TileLayer('base', {
+          baseLayer: new maptalks.TileLayer('base', {
             spatialReference: baseLayer.spatialReference,
             // urlTemplate: 'http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer/tile/{z}/{y}/{x}',
             urlTemplate: baseLayer.urlTemplate, // subdomains: ['a','b','c','d']
             subdomains:baseLayer.subdomains
             // attribution: '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>'
-          } as TileLayer.Options)
+          } as maptalks.TileLayer.Options)
         }
       );
     this.map.on('load', this.handleCameraChanged);
