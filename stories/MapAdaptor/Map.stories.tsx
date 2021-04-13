@@ -8,6 +8,7 @@ import Mixed from './components/Mixed';
 import MultiAMap from './components/MultiAMap';
 import MultiMapbox from './components/MultiMapbox';
 import MultiAMapLayer from './components/multiMaptest';
+import Maptalks from './components/Maptalks';
 // @ts-ignore
 import notes from './Map.md';
 // @ts-ignore
@@ -35,4 +36,8 @@ storiesOf('地图底图', module)
   })
   .add('高德地图 & Mapbox 混合', () => <Mixed />, {
     notes: { markdown: notes },
-  });
+  })
+  .add('maptalks', () => <Maptalks/>, {
+    notes: { markdown: notes },
+  })
+

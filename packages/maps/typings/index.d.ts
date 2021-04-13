@@ -28,6 +28,11 @@ interface IMapboxInstance {
     height: number;
   };
 }
+
+interface IMaptalksInstance {
+  
+}
+
 interface IEventEmitter<EventTypes extends string | symbol = string | symbol> {
   emit(event: EventTypes, ...args: any[]): boolean;
   /**

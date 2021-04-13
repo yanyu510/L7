@@ -37,6 +37,7 @@
     "inversify": "^5.0.1",
     "load-styles": "^2.0.0",
     "mapbox-gl": "^1.2.1",
+    "maptalks": "0.49.1",
     "viewport-mercator-project": "^6.2.1"
   },
   "devDependencies": {

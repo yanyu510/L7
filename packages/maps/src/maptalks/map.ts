@@ -1,5 +1,5 @@
 /**
- * MapboxService
+ * MaptalksService
  */
 import {
   Bounds,
@@ -21,13 +21,10 @@ import {
 import { DOM } from '@antv/l7-utils';
 import { mat4, vec2, vec3 } from 'gl-matrix';
 import { inject, injectable } from 'inversify';
-import mapboxgl, { IControl, Map } from 'mapbox-gl';
+import maptalks, { Map, Coordinate, Point, Extent,TileLayer } from 'maptalks';
 
-// tslint:disable-next-line:no-submodule-imports
-import 'mapbox-gl/dist/mapbox-gl.css';
-import { IMapboxInstance } from '../../typings/index';
+import { IMaptalksInstance } from '../../typings/index';
 import Viewport from './Viewport';
-window.mapboxgl = mapboxgl;
 const EventMap: {
   [key: string]: any;
 } = {
@@ -39,15 +36,13 @@ const EventMap: {
 import { MapTheme } from './theme';
 let mapdivCount = 0;
 const LNGLAT_OFFSET_ZOOM_THRESHOLD = 12;
-const MAPBOX_API_KEY =
-  'pk.eyJ1IjoibHp4dWUiLCJhIjoiYnhfTURyRSJ9.Ugm314vAKPHBzcPmY1p4KQ';
 /**
  * AMapService
  */
 @injectable()
-export default class MapboxService
-  implements IMapService<Map & IMapboxInstance> {
-  public map: Map & IMapboxInstance;
+export default class MaptalksService
+  implements IMapService<Map & IMaptalksInstance> {
+  public map: Map & IMaptalksInstance;
 
   @inject(TYPES.MapConfig)
   private readonly config: Partial<IMapConfig>;
@@ -69,7 +64,7 @@ export default class MapboxService
 
   // init
   public addMarkerContainer(): void {
-    const container = this.map.getCanvasContainer();
+    const container = this.map.getMainPanel()
     this.markerContainer = DOM.create('div', 'l7-marker-container', container);
     this.markerContainer.setAttribute('tabindex', '-1');
   }
@@ -92,15 +87,15 @@ export default class MapboxService
   }
 
   public getContainer(): HTMLElement | null {
-    return this.map.getContainer();
+    return this.map.getMainPanel();
   }
 
   public getMapCanvasContainer(): HTMLElement {
-    return this.map.getCanvasContainer() as HTMLElement;
+    return this.map.getMainPanel() as HTMLElement;
   }
 
   public getSize(): [number, number] {
-    const size = this.map.transform;
+    const size = this.map.getSize();
     return [size.width, size.height];
   }
   // get mapStatus method
@@ -110,7 +105,7 @@ export default class MapboxService
   }
 
   public getZoom(): number {
-    return this.map.getZoom();
+    return this.map.getZoom()-1;
   }
 
   public setZoom(zoom: number) {
@@ -118,11 +113,12 @@ export default class MapboxService
   }
 
   public getCenter(): ILngLat {
-    return this.map.getCenter();
+    const center = this.map.getCenter().toArray()
+    return {lng: center[0], lat: center[1]}
   }
 
   public setCenter(lnglat: [number, number]): void {
-    this.map.setCenter(lnglat);
+    this.map.setCenter(new Coordinate(lnglat));
   }
 
   public getPitch(): number {
@@ -134,7 +130,7 @@ export default class MapboxService
   }
 
   public getBounds(): Bounds {
-    return this.map.getBounds().toArray() as Bounds;
+    return this.map.getExtent().toArray() as Bounds;
   }
 
   public getMinZoom(): number {
@@ -150,25 +146,25 @@ export default class MapboxService
   }
 
   public zoomIn(option?: any, eventData?: any): void {
-    this.map.zoomIn(option, eventData);
+    this.map.zoomIn();
   }
   public zoomOut(option?: any, eventData?: any): void {
-    this.map.zoomOut(option, eventData);
+    this.map.zoomOut();
   }
   public setPitch(pitch: number) {
     return this.map.setPitch(pitch);
   }
 
   public panTo(p: [number, number]): void {
-    this.map.panTo(p);
+    this.map.panTo(new Coordinate(p));
   }
 
   public panBy(pixel: [number, number]): void {
-    this.panTo(pixel);
+    this.map.panBy(new Point(pixel));
   }
 
-  public fitBounds(bound: Bounds, fitBoundsOptions?: unknown): void {
-    this.map.fitBounds(bound, fitBoundsOptions as mapboxgl.FitBoundsOptions);
+  public fitBounds(bound: Bounds, zoomOffset: number): void {
+    this.map.fitExtent(new Extent(bound[0][0],bound[0][1], bound[1][0],bound[1][1]),zoomOffset);
   }
 
   public setMaxZoom(max: number): void {
@@ -180,62 +176,65 @@ export default class MapboxService
   }
   public setMapStatus(option: Partial<IStatusOptions>): void {
     if (option.doubleClickZoom === true) {
-      this.map.doubleClickZoom.enable();
+      this.configMap({'doubleClickZoom': true});
     }
     if (option.doubleClickZoom === false) {
-      this.map.doubleClickZoom.disable();
+      this.configMap({'doubleClickZoom': false});
     }
     if (option.dragEnable === false) {
-      this.map.dragPan.disable();
+      this.configMap({'dragEnable': false});
     }
     if (option.dragEnable === true) {
-      this.map.dragPan.enable();
+      this.configMap({'dragEnable': true});
     }
     if (option.rotateEnable === false) {
-      this.map.dragRotate.disable();
+      this.configMap({'dragRotate': false});
     }
     if (option.rotateEnable === true) {
-      this.map.dragRotate.enable();
+      this.configMap({'dragRotate': false});
     }
-    if (option.keyboardEnable === false) {
-      this.map.keyboard.disable();
-    }
-    if (option.keyboardEnable === true) {
-      this.map.keyboard.enable();
-    }
+    // if (option.keyboardEnable === false) {
+    //   this.configMap({'keyboardEnable ': false});
+    // }
+    // if (option.keyboardEnable === true) {
+    //   this.configMap({'keyboardEnable ': false});
+    // }
     if (option.zoomEnable === false) {
-      this.map.scrollZoom.disable();
+      this.configMap({'zoomable': false});
     }
     if (option.zoomEnable === true) {
-      this.map.scrollZoom.enable();
+      this.configMap({'zoomable': false});
     }
+  }
+
+  private configMap(option: object):void{
+
+    this.map.config(option)
   }
 
   public setZoomAndCenter(zoom: number, center: [number, number]): void {
-    this.map.flyTo({
-      zoom,
-      center,
-    });
+    this.map.setCenterAndZoom(new Coordinate(center), zoom);
   }
 
   public setMapStyle(style: any): void {
-    this.map.setStyle(this.getMapStyle(style));
+    // this.map.setStyle(this.getMapStyle(style));
   }
   // TODO: 计算像素坐标
   public pixelToLngLat(pixel: [number, number]): ILngLat {
-    return this.map.unproject(pixel);
+    const coordinate = this.map.viewPointToCoord(new Point(pixel)).toArray()
+    return {lng: coordinate[0], lat: coordinate[1]}
   }
 
   public lngLatToPixel(lnglat: [number, number]): IPoint {
-    return this.map.project(lnglat);
+    return this.map.coordToViewPoint(new Coordinate(lnglat)).toJSON() as IPoint
   }
 
   public containerToLngLat(pixel: [number, number]): ILngLat {
-    return this.map.unproject(pixel);
+    return this.pixelToLngLat(pixel);
   }
 
   public lngLatToContainer(lnglat: [number, number]): IPoint {
-    return this.map.project(lnglat);
+    return this.lngLatToPixel(lnglat);
   }
   public lngLatToMercator(
     lnglat: [number, number],
@@ -289,11 +288,10 @@ export default class MapboxService
   public async init(): Promise<void> {
     const {
       id = 'map',
-      attributionControl = false,
-      style = 'light',
-      token = MAPBOX_API_KEY,
-      rotation = 0,
       mapInstance,
+      center,
+      zoom,
+      baseLayer,
       ...rest
     } = this.config;
 
@@ -305,25 +303,10 @@ export default class MapboxService
      */
 
     // 判断全局 mapboxgl 对象的加载
-    if (!mapInstance && !window.mapboxgl) {
-      // 用户有时传递进来的实例是继承于 mapbox 实例化的，不一定是 mapboxgl 对象。
-      this.logger.error(this.configService.getSceneWarninfo('SDK'));
-    }
-
-    if (
-      token === MAPBOX_API_KEY &&
-      style !== 'blank' &&
-      !window.mapboxgl.accessToken &&
-      !mapInstance // 如果用户传递了 mapInstance，应该不去干预实例的 accessToken。
-    ) {
-      this.logger.warn(this.configService.getSceneWarninfo('MapToken'));
-    }
-
-    // 判断是否设置了 accessToken
-    if (!mapInstance && !window.mapboxgl.accessToken) {
-      // 用户有时传递进来的实例是继承于 mapbox 实例化的，不一定是 mapboxgl 对象。
-      window.mapboxgl.accessToken = token;
-    }
+    // if (!mapInstance && !window.maptalks) {
+    //   // 用户有时传递进来的实例是继承于 mapbox 实例化的，不一定是 mapboxgl 对象。
+    //   this.logger.error(this.configService.getSceneWarninfo('SDK'));
+    // }
 
     if (mapInstance) {
       // @ts-ignore
@@ -332,22 +315,33 @@ export default class MapboxService
     } else {
       this.$mapContainer = this.creatAmapContainer(id);
       // @ts-ignore
-      this.map = new window.mapboxgl.Map({
-        container: this.$mapContainer,
-        style: this.getMapStyle(style),
-        attributionControl,
-        bearing: rotation,
-        ...rest,
-      });
-    }
+     
+      this.map = new Map(
+        this.$mapContainer,
+        {
+          center: center,
+          zoom: zoom,
+          ...rest,
+          baseLayer: new TileLayer('base', {
+            spatialReference: baseLayer.spatialReference,
+            // urlTemplate: 'http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer/tile/{z}/{y}/{x}',
+            urlTemplate: baseLayer.urlTemplate, // subdomains: ['a','b','c','d']
+            subdomains:baseLayer.subdomains
+            // attribution: '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>'
+          } as TileLayer.Options)
+        }
+      );
     this.map.on('load', this.handleCameraChanged);
-    this.map.on('move', this.handleCameraChanged);
+    this.map.on('moving', this.handleCameraChanged);
+    this.map.on('zooming', this.handleCameraChanged);
+    this.map.on('dragrotating',this.handleCameraChanged);
     this.map.on('click', (e:any) => {
-      console.log("mapbox click");
+      console.log("maptalks click");
       console.log(e)
     })
     // 不同于高德地图，需要手动触发首次渲染
     this.handleCameraChanged();
+      }
   }
 
   public destroy() {
@@ -365,16 +359,11 @@ export default class MapboxService
   }
 
   public getMapContainer() {
-    return this.$mapContainer;
+    return this.map.getMainPanel()
   }
 
   public exportMap(type: 'jpg' | 'png'): string {
-    const renderCanvas = this.map.getCanvas();
-    const layersPng =
-      type === 'jpg'
-        ? (renderCanvas?.toDataURL('image/jpeg') as string)
-        : (renderCanvas?.toDataURL('image/png') as string);
-    return layersPng;
+    return this.map.toDataURL({mimeType: type});
   }
   public onCameraChanged(callback: (viewport: IViewport) => void): void {
     this.cameraChangedCallback = callback;
@@ -382,16 +371,16 @@ export default class MapboxService
 
   private handleCameraChanged = () => {
     // @see https://github.com/mapbox/mapbox-gl-js/issues/2572
-    const { lat, lng } = this.map.getCenter().wrap();
+    const centerCoords = this.map.getCenter().toArray()
 
     // resync
     this.viewport.syncWithMapCamera({
       bearing: this.map.getBearing(),
-      center: [lng, lat],
-      viewportHeight: this.map.transform.height,
+      center: [centerCoords[0], centerCoords[1]],
+      viewportHeight: this.map.getSize().height,
       pitch: this.map.getPitch(),
-      viewportWidth: this.map.transform.width,
-      zoom: this.map.getZoom(),
+      viewportWidth: this.map.getSize().width,
+      zoom: this.getZoom(),
       // mapbox 中固定相机高度为 viewport 高度的 1.5 倍
       cameraHeight: 0,
     });
