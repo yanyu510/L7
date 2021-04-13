@@ -125,7 +125,7 @@ export default class MaptalksService
   }
 
   public getRotation(): number {
-    return this.map.getBearing();
+    return this.map.getBearing()-90;
   }
 
   public getBounds(): Bounds {
@@ -141,7 +141,7 @@ export default class MaptalksService
   }
 
   public setRotation(rotation: number): void {
-    this.map.setBearing(rotation);
+    this.map.setBearing(rotation + 90);
   }
 
   public zoomIn(option?: any, eventData?: any): void {
@@ -291,6 +291,7 @@ export default class MaptalksService
       center,
       zoom,
       baseLayer,
+      rotation,
       ...rest
     } = this.config;
 
@@ -330,6 +331,9 @@ export default class MaptalksService
           } as maptalks.TileLayer.Options)
         }
       );
+    if(rotation) {
+      this.setRotation(rotation)
+    }
     this.map.on('load', this.handleCameraChanged);
     this.map.on('moving', this.handleCameraChanged);
     this.map.on('zooming', this.handleCameraChanged);
