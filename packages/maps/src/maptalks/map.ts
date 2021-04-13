@@ -33,7 +33,6 @@ const EventMap: {
   zoomchange: 'zoom',
   dragging: 'drag',
 };
-import { MapTheme } from './theme';
 let mapdivCount = 0;
 const LNGLAT_OFFSET_ZOOM_THRESHOLD = 12;
 /**
@@ -421,11 +420,5 @@ export default class MaptalksService
     $amapdiv.id = 'l7_mapbox_div' + mapdivCount++;
     $wrapper.appendChild($amapdiv);
     return $amapdiv;
-  }
-  private getMapStyle(name: MapStyle) {
-    if (typeof name !== 'string') {
-      return name;
-    }
-    return MapTheme[name] ? MapTheme[name] : name;
   }
 }
