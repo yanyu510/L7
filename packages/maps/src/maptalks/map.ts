@@ -129,7 +129,8 @@ export default class MaptalksService
   }
 
   public getBounds(): Bounds {
-    return this.map.getExtent().toArray() as Bounds;
+    const extent = this.map.getExtent();
+    return [[extent.xmin, extent.ymin],[extent.xmax, extent.ymax]];
   }
 
   public getMinZoom(): number {
@@ -328,7 +329,7 @@ export default class MaptalksService
             urlTemplate: baseLayer.urlTemplate, // subdomains: ['a','b','c','d']
             subdomains:baseLayer.subdomains
             // attribution: '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>'
-          } as maptalks.TileLayer.Options)
+          } as maptalks.TileLayerOptions)
         }
       );
     if(rotation) {
