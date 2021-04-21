@@ -5609,6 +5609,11 @@
   dependencies:
     "@types/geojson" "*"
 
+"@types/maptalks@0.49.0":
+  version "0.49.0"
+  resolved "http://192.168.1.228:8081/repository/bril-npm/@types/maptalks/-/maptalks-0.49.0.tgz#32394498c7c44cb76c12f9c4b79621869133ea81"
+  integrity sha512-CE4zQUDWCtrPAARN3ESYaJDvhT8K/CRF2IH5zRVxM4MukUFhwM7LqmvRy3ZXs24eFyOepjpFwJtd4KNZ+xKhPQ==
+
 "@types/mdast@^3.0.3":
   version "3.0.3"
   resolved "https://registry.npm.taobao.org/@types/mdast/download/@types/mdast-3.0.3.tgz#2d7d671b1cd1ea3deb306ea75036c2a0407d2deb"
