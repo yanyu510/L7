@@ -325,11 +325,9 @@ export default class MaptalksService
           ...rest,
           baseLayer: new maptalks.TileLayer('base', {
             spatialReference: baseLayer.spatialReference,
-            // urlTemplate: 'http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer/tile/{z}/{y}/{x}',
-            urlTemplate: baseLayer.urlTemplate, // subdomains: ['a','b','c','d']
+            urlTemplate: baseLayer.urlTemplate,
             subdomains:baseLayer.subdomains
-            // attribution: '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>'
-          })
+         })
         }
       );
     if(rotation) {
