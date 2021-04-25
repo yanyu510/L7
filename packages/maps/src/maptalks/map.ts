@@ -329,7 +329,7 @@ export default class MaptalksService
             urlTemplate: baseLayer.urlTemplate, // subdomains: ['a','b','c','d']
             subdomains:baseLayer.subdomains
             // attribution: '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>'
-          } as maptalks.TileLayerOptions)
+          })
         }
       );
     if(rotation) {
