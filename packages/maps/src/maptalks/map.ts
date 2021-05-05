@@ -330,6 +330,7 @@ export default class MaptalksService
          })
         }
       );
+    }
     if(rotation) {
       this.setRotation(rotation)
     }
@@ -340,7 +341,6 @@ export default class MaptalksService
     this.map.on('viewchange', this.handleCameraChanged);
     // 不同于高德地图，需要手动触发首次渲染
     this.handleCameraChanged();
-      }
   }
 
   public destroy() {
