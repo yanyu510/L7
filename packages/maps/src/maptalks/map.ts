@@ -312,7 +312,7 @@ export default class MaptalksService
     if (mapInstance) {
       // @ts-ignore
       this.map = mapInstance;
-      this.$mapContainer = this.map.getContainer();
+      this.$mapContainer = this.map.getMainPanel();
     } else {
       this.$mapContainer = this.creatAmapContainer(id);
       // @ts-ignore
