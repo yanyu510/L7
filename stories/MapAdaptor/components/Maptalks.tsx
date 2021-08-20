@@ -17,37 +17,45 @@ export default class MapTalksComponent extends React.Component {
     );
 
     let mapInstance = new maptalks.Map("map", {
-      center: [-0.113049, 51.498568],
-      zoom: 14,
-      pitch: 45,
-      // allow map to drag pitching, true by default
-      dragPitch: true,
-      // allow map to drag rotating, true by default
-      dragRotate: true,
-      // enable map to drag pitching and rotating at the same time, false by default
-      dragRotatePitch: true,
-      // attribution: true,
-      zoomControl: true, //  add zoom control
-      scaleControl: true, //  add scale control
-      overviewControl: true, //  add overview control
-      centerCross: true,
+      // center: [110.19382669582967, 30.258134],
+      // zoom: 3,
+      // pitch: 0,
+      // // allow map to drag pitching, true by default
+      // dragPitch: true,
+      // // allow map to drag rotating, true by default
+      // dragRotate: true,
+      // // enable map to drag pitching and rotating at the same time, false by default
+      // dragRotatePitch: true,
+      // // attribution: true,
+      // zoomControl: true, //  add zoom control
+      // scaleControl: true, //  add scale control
+      // overviewControl: true, //  add overview control
+      // centerCross: true,
       
-      attribution: {
-          content: "&copy BoudlessGeo",
-      },
-      baseLayer:
-          new maptalks.TileLayer("base", {
+      // attribution: {
+      //     content: "&copy BoudlessGeo",
+      // },
+      // baseLayer:
+      //     new maptalks.TileLayer("base", {
              
-              crossOrigin: "anonymous",
-              urlTemplate: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-              subdomains: ["a", "b", "c", "d"],
-              attribution:
-                  '&copy; <a href="http:// osm.org">OpenStreetMap</a> contributors, &copy; <a href="https:// carto.com/">CARTO</a>',
-          })
+      //         crossOrigin: "anonymous",
+      //         urlTemplate: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+      //         subdomains: ["a", "b", "c", "d"],
+      //         attribution:
+      //             '&copy; <a href="http:// osm.org">OpenStreetMap</a> contributors, &copy; <a href="https:// carto.com/">CARTO</a>',
+      //     })
     
-      
-  
-    
+      center: [110.19382669582967, 30.258134],
+        pitch: 0,
+        zoom: 3,
+        baseLayer: new maptalks.TileLayer("base", {
+          spatialReference:{
+            projection : 'baidu'
+          },
+          urlTemplate: 'http://online{s}.map.bdimg.com/onlinelabel/?qt=tile&x={x}&y={y}&z={z}&styles=pl&udt=20160804&scaler=1&p=1',
+          // subdomains: ['a','b','c','d']
+          subdomains:[0,1,2,3,4,5,6,7,8,9]
+        })
   });
 
 
@@ -56,19 +64,18 @@ export default class MapTalksComponent extends React.Component {
       id: 'map',
       map: new MapTalks({
         mapInstance: mapInstance
-        // center: [110.19382669582967, 30.258134],
-        // pitch: 0,
-        // zoom: 3,
-       
-        // baseLayer: {
-        //   spatialReference:{
-        //     projection : 'baidu'
-        //   },
-        //   urlTemplate: 'http://online{s}.map.bdimg.com/onlinelabel/?qt=tile&x={x}&y={y}&z={z}&styles=pl&udt=20160804&scaler=1&p=1',
-        //   // subdomains: ['a','b','c','d']
-        //   subdomains:[0,1,2,3,4,5,6,7,8,9]
-        // }
-      }),
+      //   center: [110.19382669582967, 30.258134],
+      //   pitch: 0,
+      //   zoom: 3,
+      //   baseLayer: {
+      //     spatialReference:{
+      //       projection : 'baidu'
+      //     },
+      //     urlTemplate: 'https://gss{s}.bdstatic.com/8bo_dTSlRsgBo1vgoIiO_jowehsv/tile/?qt=tile&x={x}&y={y}&z={z}&styles=pl&scaler=1&udt=20170927',
+      //     // subdomains: ['a','b','c','d']
+      //     subdomains:[0,1,2,3]
+      //   }
+      })
     });
     this.scene = scene;
     const layer = new PolygonLayer({});

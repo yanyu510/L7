@@ -331,6 +331,7 @@ export default class MaptalksService
         }
       );
     }
+    this.map.checkSize()
     if(rotation) {
       this.setRotation(rotation)
     }
